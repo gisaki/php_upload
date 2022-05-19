@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<script>
+function file_upload()
+{
+    if (window.confirm('アップロードします')) {
+        var formdata = new FormData(document.getElementById("up_form"));
+
+        var xhttpreq = new XMLHttpRequest();
+        xhttpreq.onreadystatechange = function() {
+            if (xhttpreq.readyState == 4 && xhttpreq.status == 200) {
+                // alert(xhttpreq.responseText);
+                document.getElementById('up_result').innerHTML = xhttpreq.responseText;
+            }
+        };
+        xhttpreq.open("POST", "/tmp/up.php", true);
+        xhttpreq.send(formdata);
+    } else {
+        document.getElementById('up_result').innerHTML = "キャンセルされました";
+        return;
+    }
+}
+</script>
+</head>
+<body>
+
+<form id="up_form">
+  <input type="file" name="fname">
+    <button type="button" onclick="file_upload()">upload</button>
+</form>
+<div id="up_result"></div>
+
+</body>
+</html>
